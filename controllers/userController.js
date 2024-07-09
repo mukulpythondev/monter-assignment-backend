@@ -67,3 +67,18 @@ export const verifyOTP = async (req, res) => {
     res.status(err.statusCode || 500).json(new ApiError(err.statusCode || 500, err.message || "Something went wrong verifying the user!"));
   }
 };
+export const getUserDetails = async (req, res, next) => {
+  try {
+    const userId = req?.userId;
+
+    const user = await User.findById(userId).select('-password');
+
+    if (!user) {
+      throw new ApiError(404, 'User not found');
+    }
+
+    res.status(200).json(new ApiResponse(200, user, 'User details fetched successfully'));
+  } catch (err) {
+    next(err);
+  }
+};

@@ -4,7 +4,7 @@ import ApiError from '../utils/ApiError.js';
 
 const verifyToken = (req, res, next) => {
   const token = req.header('Authorization').replace('Bearer ', '');
-
+   console.log("token:",token)
   if (!token) {
     throw new ApiError(401, 'Access denied. No token provided.');
   }
